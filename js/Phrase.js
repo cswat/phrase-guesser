@@ -6,7 +6,6 @@ class Phrase {
     //adds phrase to the display
     addPhraseToDisplay() {
         const phraseList = document.querySelector('#phrase ul')
-        console.log(this.phrase)
         this.phrase.split('').forEach((character) => {
             const phraseLetter = document.createElement('li')
             if (character !== ' ') { 
@@ -34,7 +33,7 @@ class Phrase {
     //removes the letter class from a matched letter
     showMatchedLetter(matchedLetter) {
         const letterList = Array.from(document.querySelectorAll('#phrase li'))
-        letterList[matchedLetter].className = ''
+        letterList[matchedLetter].className = 'show'
     }
 
 }
