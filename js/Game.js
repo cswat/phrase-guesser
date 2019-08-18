@@ -15,8 +15,8 @@ class Game {
     startGame() {
         const gameOverlay = document.getElementById('overlay')
         gameOverlay.style.display = 'none'
-        this.activePhrase = phrase
-        phrase.addPhraseToDisplay()
+        this.activePhrase = new Phrase(this.getRandomPhrase())
+        this.activePhrase.addPhraseToDisplay()
     }
 
     //generates random phrase from list of phrases and initializes Phrase
@@ -29,7 +29,7 @@ class Game {
     handleInteraction(object) {
         const selectedLetter = object
         selectedLetter.className = 'chosen'
-        if (phrase.checkLetter(selectedLetter.textContent)) {
+        if (this.activePhrase.checkLetter(selectedLetter.textContent)) {
             this.checkForWin()
         } else {
             this.removeLife()
@@ -55,15 +55,38 @@ class Game {
         }
     }
 
-    //unhides overlay and displays win or lose message
+    //reset functionality
+    resetGame() {
+        //reset keyboard
+        const selectedKeys = Array.from(document.getElementsByClassName('chosen'))
+        selectedKeys.forEach((key) => {
+            key.className = ''
+        })
+        //re-add hearts based on hearts remaining
+        const heartsLeft = document.querySelectorAll('.tries')
+        const heart = document.querySelector('.tries')
+        for (let i=0; i<(5-heartsLeft.length); i++) {
+            console.log(i)
+            const newHeart = heart.cloneNode(true)
+            heart.parentNode.appendChild(newHeart)
+        }
+        //remove existing phrase
+        const phraseLetters = document.querySelector('#phrase ul')
+        while (phraseLetters.hasChildNodes()) {   
+            phraseLetters.removeChild(phraseLetters.firstChild) 
+        }
+    }
+
+    //unhides overlay, displays win or lose message, and resets game state
     gameOver(condition) {
         const gameOverlay = document.getElementById('overlay')
         gameOverlay.style.display = ''
         if (condition === 'lose') {
             gameOverlay.className = 'lose'
+            this.resetGame()
         } else {
             gameOverlay.className = 'win'
+            this.resetGame()
+            }
         }
     }
-
-}
