@@ -29,6 +29,7 @@ class Game {
     handleInteraction(object) {
         const selectedLetter = object
         selectedLetter.className = 'chosen'
+        selectedLetter.disabled = true
         if (this.activePhrase.checkLetter(selectedLetter.textContent)) {
             this.checkForWin()
         } else {
@@ -50,6 +51,7 @@ class Game {
         const hearts = document.querySelectorAll('#scoreboard li')
         if (hearts.length > 1) {
             hearts[0].parentNode.removeChild(hearts[0])
+            this.missed += 1
         } else {
             this.gameOver('lose')
         }
@@ -60,7 +62,8 @@ class Game {
         //reset keyboard
         const selectedKeys = Array.from(document.getElementsByClassName('chosen'))
         selectedKeys.forEach((key) => {
-            key.className = ''
+            key.className = 'key'
+            key.disabled = false
         })
         //re-add hearts based on hearts remaining
         const heartsLeft = document.querySelectorAll('.tries')
@@ -70,6 +73,7 @@ class Game {
             const newHeart = heart.cloneNode(true)
             heart.parentNode.appendChild(newHeart)
         }
+        this.missed = 0
         //remove existing phrase
         const phraseLetters = document.querySelector('#phrase ul')
         while (phraseLetters.hasChildNodes()) {   
