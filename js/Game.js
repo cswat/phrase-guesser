@@ -28,12 +28,13 @@ class Game {
     //takes in selected letters and checks them against phrase
     handleInteraction(object) {
         const selectedLetter = object
-        selectedLetter.className = 'chosen'
         selectedLetter.disabled = true
         if (this.activePhrase.checkLetter(selectedLetter.textContent)) {
             this.checkForWin()
+            selectedLetter.className = 'chosen'
         } else {
             this.removeLife()
+            selectedLetter.className = 'wrong'
         }
     }
 
