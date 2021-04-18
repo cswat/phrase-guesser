@@ -1,5 +1,5 @@
 # phrase-guesser
-A guessing game built in Javascript
+A guessing game built in JavaScript
 
 Similar to hangman:
 
